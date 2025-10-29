@@ -192,21 +192,6 @@ medic-agent/
 └── README.md
 ```
 
-## API Endpoints
-
-### Authentication Routes (`/auth`)
-
-- `POST /auth/signup` - Create new user account
-- `POST /auth/signin` - Sign in existing user
-- `GET /auth/user/:userId` - Get user by ID
-- `GET /auth/users` - List all users (admin)
-- `PUT /auth/user/:userId` - Update user
-- `DELETE /auth/user/:userId` - Delete user
-
-### Health Check (`/health`)
-
-- `GET /health` - System health status including all service connections
-
 ## Infrastructure Services
 
 ### ChromaDB (Vector Database)
@@ -260,72 +245,21 @@ All service statuses are logged during application startup, making it easy to id
 5. **Protected Routes**: Components wrapped with `ProtectedRoute`
 6. **Sign Out**: User logs out, session cleared
 
-## Features in Detail
-
-### Frontend Authentication
-
-- **Real-time State**: AuthContext provides live user state
-- **Social Login**: Google OAuth integration
-- **Form Validation**: Client-side validation with error handling
-- **Loading States**: Spinner animations during auth operations
-- **Responsive Design**: Mobile-friendly authentication forms
-
-### Backend API
-
-- **Input Validation**: Zod schemas for request validation
-- **Error Handling**: Comprehensive error responses
-- **Admin Operations**: User management with service role
-- **Security**: CORS configuration and proper headers
-- **Service Health**: Connection status monitoring for all services
-- **Service Initialization**: Automatic setup and verification of all infrastructure services
-
-### AI and Vector Database
-
-- **ChromaDB Integration**: Vector storage for medical knowledge
-- **Document Management**: Add, query, and manage medical documents
-- **Semantic Search**: Find relevant medical information
-- **Collection Management**: Organize documents by categories
-- **Health Monitoring**: Real-time connection status
-
-### Job Queue System
-
-- **BullMQ Integration**: Background task processing
-- **Notification Queue**: Handle user notifications
-- **Retry Logic**: Automatic retry with exponential backoff
-- **Job Monitoring**: Real-time job status via Bull Board
-- **Connection Health**: Queue system status monitoring
-
-### Local LLM Integration
-
-- **Ollama Integration**: Local AI model management
-- **Automatic Setup**: Model downloading and configuration
-- **Model Health**: Availability and status monitoring
-- **Configurable Models**: Support for different AI models
-- **Local Inference**: Privacy-preserving AI capabilities
-
-### Security Features
-
-- **JWT Tokens**: Secure session management
-- **Password Strength**: Real-time password validation
-- **Protected Routes**: Automatic redirect for unauthenticated users
-- **Input Sanitization**: Server-side validation and sanitization
-- **Service Authentication**: Secure connections to ChromaDB and Redis
-- **Health Monitoring**: Continuous service availability checking
-
 ## Development
 
 ### Running in Development
 
 ```bash
-# Terminal 1 - Start infrastructure
+# Start infrastructure
 cd backend
 docker-compose up -d
 
-# Terminal 2 - Backend
+# Terminal 1 - Backend
 cd backend
+nvm use
 yarn dev
 
-# Terminal 3 - Frontend
+# Terminal 2 - Frontend
 cd frontend
 yarn dev
 ```
@@ -340,6 +274,7 @@ yarn start
 
 # Backend
 cd backend
+nvm use
 yarn build
 yarn start
 ```
