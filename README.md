@@ -45,7 +45,7 @@ A modern web application with Supabase authentication, featuring sign-in/sign-up
 - **Node.js** (v24.3.0 or higher) - [Download here](https://nodejs.org/)
 - **Yarn** (v1.22.0 or higher) - [Install guide](https://classic.yarnpkg.com/en/docs/install/)
 - **Docker** and **Docker Compose** - [Install guide](https://docs.docker.com/get-docker/)
-- **Supabase** account and project
+- **Supabase** account and project - [Set up here](https://supabase.com/dashboard/) 
 - **Ollama** - [Install guide](https://ollama.ai/download) (for local LLM capabilities)
 
 ### 2. Node.js Version Management
