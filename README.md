@@ -76,19 +76,32 @@ Create the following environment files:
 
 #### Backend (.env)
 ```bash
+# supabase
 SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 SUPABASE_ANON_KEY=your_anon_key
+
+# chroma
 CHROMA_URL=http://localhost:8000
 CHROMA_USERNAME=admin
 CHROMA_PASSWORD=admin
 CHROMA_SERVER_HOST=localhost
 CHROMA_SERVER_HTTP_PORT=8000
+
+# redis
 REDIS_HOST=localhost
 REDIS_PORT=6379
 REDIS_PASSWORD=
+
+# ollama
 OLLAMA_BASE=http://localhost:11434
 OLLAMA_MODEL=mistral
+
+# openai: only used when LLM_PROVIDER is openai
+OPENAI_API_KEY=your_key
+
+# llm provider: default to ollama. you can switch this to openai with the OPENAI_API_KEY
+LLM_PROVIDER=ollama
 ```
 
 #### Frontend (.env.local)
@@ -115,14 +128,17 @@ This will start:
 
 ```bash
 cd backend
+nvm use
 yarn install
-yarn dev
+yarn build
+yarn start
 ```
 
 The backend will automatically:
 - Check connection status for all services (Supabase, ChromaDB, Redis, BullMQ)
 - Set up Ollama model if not already available
 - Log the status of each service connection
+- **You may need to wait a while to pull the LLM model if you don't have it on your docker machine**
 
 #### Frontend
 
