@@ -35,14 +35,14 @@ async function start() {
     ? app.log.info(notificationQueueStatus.message)
     : app.log.error(notificationQueueStatus.message);
 
-  // setupOllama(app.log).catch(err =>
-  //   app.log.error(`model setup failed: ${err}`)
-  // );
+  setupOllama(app.log).catch(err =>
+    app.log.error(`model setup failed: ${err}`)
+  );
 
   app.register(healthRoutes, { prefix: '/health' });
-  app.register(authRoutes, { prefix: '/auth' });
+  // app.register(authRoutes, { prefix: '/auth' });
   // app.register(agentsRoutes, { prefix: '/agents' }); // @todo replace this with agentsGraph
-  app.register(calendarRoutes, { prefix: '/calendar' });
+  // app.register(calendarRoutes, { prefix: '/calendar' });
 
   // A2A LangGraph routes
   const { llmService } = await import('./services/llm');
