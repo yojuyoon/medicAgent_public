@@ -138,7 +138,7 @@ The backend will automatically:
 - Check connection status for all services (Supabase, ChromaDB, Redis, BullMQ)
 - Set up Ollama model if not already available
 - Log the status of each service connection
-- **You may need to wait a while to pull the LLM model if you don't have it on your docker machine**
+- **You may need to wait a while to pull the LLM model if you don't have it on your docker**
 
 #### Frontend
 
