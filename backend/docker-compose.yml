@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: chroma
+    environment:
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+      - CHROMA_SERVER_CORS_ALLOW_ORIGINS=["*"]
+      - CHROMA_SERVER_AUTH_CREDENTIALS_FILE=/chroma/chroma.htpasswd
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=chromadb.auth.providers.HtpasswdFileAuthProvider
+      - CHROMA_SERVER_AUTH_PROVIDER=chromadb.auth.providers.HtpasswdFileAuthProvider
+    volumes:
+      - chroma_data:/chroma/chroma
+      - ./chroma.htpasswd:/chroma/chroma.htpasswd
+    ports:
+      - '8000:8000'
+    networks:
+      - medicagent-network
+
+  redis:
+    image: redis:latest
+    container_name: bullmq_redis
+    ports:
+      - '6379:6379'
+    networks:
+      - medicagent-network
+
+  bullboard:
+    image: venatum/bull-board:latest
+    container_name: bullboard_ui
+    ports:
+      - '8888:3000'
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    networks:
+      - medicagent-network
+
+  # ---- LEAN OLLAMA (CPU-only on Apple Silicon) ----
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - '11434:11434'
+    healthcheck:
+      test: ['CMD', 'curl', '-sf', 'http://localhost:11434/api/tags']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      # keep it light:
+      - OLLAMA_KEEP_ALIVE=0s # don't pin models in RAM
+      - OLLAMA_MAX_LOADED_MODELS=1 # only one model resident
+      - OLLAMA_NUM_PARALLEL=1 # single generation at a time
+      # optionally limit CPU threads (Apple CPUs default to many):
+      - OLLAMA_NUM_THREADS=4 # tune: 4–8 is a nice range on M-series
+      # if other containers call by hostname:
+      # - OLLAMA_HOST=0.0.0.0
+    # (Optional) place gentle caps so it won't hog the Mac:
+    # Note: Docker Desktop enforces these on the container.
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8g
+    networks:
+      - medicagent-network
+
+volumes:
+  chroma_data:
+  ollama_data:
+  openwebui_data:
+
+networks:
+  medicagent-network:
+    driver: bridge

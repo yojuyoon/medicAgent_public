@@ -1,0 +1,50 @@
+# Ignore compiled output and temporary files
+/build/
+/dist/
+/tmp/
+*.log
+*.swp
+
+# Ignore dependency directories
+/node_modules/
+/vendor/
+
+# Ignore IDE-specific files and settings
+.idea/
+.vscode/
+*.iml
+.DS_Store # macOS specific
+
+# Ignore environment variables and sensitive files
+.env
+config.local.js
+
+# Ignore user-specific files
+Thumbs.db # Windows specific
+
+**/build/
+**/dist/
+**/tmp/
+**/node_modules/
+**/vendor/
+**/.idea/
+**/.vscode/
+**/*.iml
+**/.DS_Store
+
+**/package-lock.json
+**/yarn.lock
+**/bun.lockb
+**/pnpm-lock.yaml
+**/pnpm-lock.json
+**/pnpm-lock.yaml
+
+# Environment files for subprojects
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Allow env templates
+!backend/.env.example
+!frontend/.env.example
